@@ -1,0 +1,58 @@
+/**/
+:- [fields].
+:- [listHelper].
+/* Defining Vectors and their Properties */
+
+vector(Entries, Field, Dimension) :-
+  len(Entries, Dimension),
+  in_field(Entries, Field).
+
+vdot(vector(Entries, Field, _), Vdot) :-
+  sum_entries(Entries, Vdot),
+  in_field(Entries, Field).
+
+vsum(vector(E1, F0, D),
+     vector(E2, F1, D),
+     vector(R, F, D)) :-
+  vector(E1, F0, D),
+  vector(E2, F1, D),
+  add_scalars(E1, E2, R),
+  extension_field(F0, F1, F).
+
+scalar_product(Scalar,
+               vector(E0, F0, D),
+               vector(E1, F1, D)) :-
+  vector(E0, F0, D),
+  mult_scalars(Scalar, E0, E1),
+  field(Scalar, Fs),
+  extension_field(Fs, F0, F1).
+
+/*
+lin_independent([]).
+lin_independent([vector(E,V,D)]).
+lin_independent(VectorList) :- not(lin_dependent(VectorList)).
+lin_dependent([vector(E0, F, D), vector(E1, F, D)|T], [X|XS]) :-
+  len([X|XS], N),
+  len([vector(E0, F, D), vector(E1, F, D)|T], N),
+*/
+
+% det(Matrix, Det) - succeeds if Det is the determinant of the Matrix.
+% NOTE: Currently has only been implemented for the 2X2 Case.
+% TODO: Implement for arbitrary case.
+det([vector([A], F, 1)], A) :-
+  vector([A], F, 1).
+det([vector([A,C], F, 2),vector([B,D], F, 2)], Det) :-
+  vector([A,C], F, 2),
+  vector([B,D], F, 2),
+  mult_scalar(A,D,X),
+  mult_scalar(B,C,Y0),
+  mult_scalar(Y0, real(-1), Y),
+  add_scalar(X, Y, Det).
+
+  
+
+
+
+% vector([real(1), real(0)], F, 2).
+% vector([real(0), real(1)], F, 2).
+% vector([complex(0,1), complex(0,-1)], F, 2).
