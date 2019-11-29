@@ -56,7 +56,8 @@ det([vector([A,C], F, 2),vector([B,D], F, 2)], Det) :-
   vector([B,D], F, 2),
   mult_scalar(A,D,X),
   mult_scalar(B,C,Y0),
-  mult_scalar(Y0, real(-1), Y),
+  negative_identity(F, NOE),
+  mult_scalar(Y0, NOE, Y),
   add_scalar(X, Y, Det).
 
 % vector([real(1), real(0)], F, 2).

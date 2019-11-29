@@ -36,6 +36,11 @@ nonZero(real(X)) :- X =\= 0.
 nonZero(complex(X,_)) :- X =\=0.
 nonZero(complex(_,X)) :- X =\=0.
 
+% negative_identity(F, NOE) :- NOE is the additive inverse of the identity
+%                              element of F.
+negative_identity(real, real(-1)).
+negative_identity(complex, complex(-1,0)).
+
 % add_scalar(A, B, C) - succeeds if A + B = C, under the constraints of their
 %                       specific field.
 add_scalar(real(A), real(B), real(C)) :-
