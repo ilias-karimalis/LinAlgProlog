@@ -7,3 +7,4 @@
 4. Gram Schmidt
 5. Matrix Transpose
 6. 2x2 Inverse
+7. Add {0,1} Field
