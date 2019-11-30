@@ -44,6 +44,13 @@ adjugate([vector([A,C], F, 2), vector([B,D], F, 2)],
   mult_scalar(B, NI, B1),
   mult_scalar(C, NI, C1).
 
+/* trace(M, T) - succeeds if M is a square matrix and T is its trace.
+trace([vector([X0|XS0], F, D0)|VS], T) :-
+  len([vector([X0|XS0], F, D0)|VS], D0),
+  trace(VS)
+  add_scalar(X0, TR, T).
+  */
+
 % inverse(M, I) - succeeds if I is the inverse of M.
 % NOTE: This currently only works for nxn matrices with n>=2.
 % TODO: Implement for nxn, arbitrary n values.
