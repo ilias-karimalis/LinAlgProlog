@@ -41,6 +41,13 @@ nonZero(complex(_,X)) :- X =\=0.
 negative_identity(real, real(-1)).
 negative_identity(complex, complex(-1,0)).
 
+% mult_identity(F, I) :- I is the multiplicative identity of F
+mult_identity(real, real(1)).
+mult_identity(complex, complex(1,0)).
+
+% mult_inverse(M, I) :- succeeds if I is the multiplicative inverse of M.
+mult_inverse(real(X), Y) :- Y is 1/X.
+
 % add_scalar(A, B, C) - succeeds if A + B = C, under the constraints of their
 %                       specific field.
 add_scalar(real(A), real(B), real(C)) :-
@@ -73,6 +80,13 @@ mult_scalar(real(A), complex(C, D), complex(X, Y)) :-
 mult_scalar(complex(C, D), real(A), complex(X, Y)) :-
   X is A*C,
   Y is A*D.
+
+% pow2(Scalar, Res) - succeeds if Res = Scalar^2.
+% NOTE: here we define the exponent as repeated multiplication which is in 
+%       itself defined by the Field to which the scalar belongs.
+pow2(X,Y) :-
+  mult_scalar(X, X, Y).
+root2(real(X),Y) :- Y is sqrt(X).
 
 % mult_scalars(Scalar, List, Res) - succeeds if the Res list is the elementwise
 %                                   product of Scalar and List.

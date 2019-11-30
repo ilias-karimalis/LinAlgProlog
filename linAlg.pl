@@ -37,6 +37,17 @@ scalar_product(Scalar,
   field(Scalar, Fs),
   extension_field(Fs, F0, F1).
 
+% norm2(Vector, N) - succeeds if N is the square of the norm of a valid Vector.
+norm2(vector([H|T], F, D), Norm) :-
+  pow2(H, H2),
+  D1 is D-1,
+  norm2(vector(T, F, D1), Norm1),
+  pow2(Norm1, N1Sqr),
+  add_scalar(H2, N1Sqr, Norm).
+norm2(vector([H], _, 1), Norm) :- pow2(H, Norm).
+  
+% vector_proj(V, W, Res) - succeeds if Res is the projection of V
+  
 % lin_independent(VectorList) - succeeds if every Vector in the VectorList is
 %                               a valid vector of the same dimension and field
 %                               and they are linearly independent.
@@ -59,6 +70,26 @@ det([vector([A,C], F, 2),vector([B,D], F, 2)], Det) :-
   negative_identity(F, NOE),
   mult_scalar(Y0, NOE, Y),
   add_scalar(X, Y, Det).
+
+% transpose(M1, M2) - succeeds if M2 is the transpose of M1.
+% NOTE: This currently only works for nxn matrices with n>=2.
+% TODO: Implement for nxn, arbitrary n values.
+transpose([vector([A,C], F, 2), vector([B,D], F, 2)],
+          [vector([A,B], F, 2), vector([C,D], F, 2)]) :-
+  vector([A,C], F, 2),
+  vector([B,D], F, 2).
+transpose([vector([A], F, 1)], [vector([A], F, 1)]) :-
+  vector([A], F, 1).
+
+% adjugate(M1, M2) - succeeds if M2 is the adjugate of M1.
+% NOTE: This currently only work for nxn matrices with n>=2.
+% TODO: Implement for nxn, arbitrary n values.
+adjugate([vector([A,C], F, 2), vector([B,D], F, 2)],
+         [vector([D,C1], F, 2), vector([B1,A], F, 2)]) :-
+  negative_identity(F, NI),
+  mult_scalar(B, NI, B1),
+  mult_scalar(C, NI, C1).
+
 
 % vector([real(1), real(0)], F, 2).
 % vector([real(0), real(1)], F, 2).
