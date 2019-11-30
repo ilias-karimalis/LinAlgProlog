@@ -12,11 +12,11 @@ vector(Entries, Field, Dimension) :-
   len(Entries, Dimension),
   in_field(Entries, Field).
 
-% vdot(Vector, Vdot) - succeeds if Vdot is the dot product of the vector Vector,
-%                      and if Vector is in fact a valid Vector.
-vdot(vector(Entries, Field, Dimension), Vdot) :-
+% norm1(Vector, Norm) - succeeds if Norm is the 1-Norm of the vector Vector,
+%                       and if Vector is in fact a valid Vector.
+norm1(vector(Entries, Field, Dimension), Norm) :-
   vector(Entries, Field, Dimension),
-  sum_entries(Entries, Vdot),
+  sum_entries(Entries, Norm),
   in_field(Entries, Field).
 
 % vsum(V1, V2, Res) - succeeds if V1, V2, Res are valid vectors and V1+V2=Res.
