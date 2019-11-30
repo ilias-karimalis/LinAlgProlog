@@ -31,6 +31,9 @@ in_field([H|T], Y) :-
   in_field(T, Y).
 in_field([],_).
 
+% complex_conjugate(X, Y) :- succeeds if Y is the complex cojugate of X.
+complex_conjugate(complex(A, B), complex(A, C)) :- C is -B.
+
 % nonZero(X) :- X is not the zero element of its field.
 nonZero(real(X)) :- X =\= 0.
 nonZero(complex(X,_)) :- X =\=0.
@@ -47,6 +50,11 @@ mult_identity(complex, complex(1,0)).
 
 % mult_inverse(M, I) :- succeeds if I is the multiplicative inverse of M.
 mult_inverse(real(X), Y) :- Y is 1/X.
+mult_inverse(complex(A,B), I) :-
+  complex_conjugate(complex(A,B), C),
+  F is A^2 + B^2,
+  G is 1/F,
+  mult_scalar(C, real(G), I).
 
 % add_scalar(A, B, C) - succeeds if A + B = C, under the constraints of their
 %                       specific field.
