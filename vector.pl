@@ -47,3 +47,14 @@ norm2(vector([H|T], F, D), Norm) :-
 norm2(vector([H], _, 1), Norm) :- pow2(H, Norm).
   
 % vector_proj(V, W, Res) - succeeds if Res is the projection of V
+
+% computes the dot product of two vectors.
+
+dot_product(vector([H1|T1], F, D), vector([H2|T2], F, D), Res) :- 
+  dot_product(vector(T1, F, Dn), vector(T2, F, Dn), Nextres),
+  mult_scalar(H1, H2, Prod).
+  add_scalar(Nextres, Prod, Res).
+
+dot_product(vector([], F, D), vector([], F, D), 0).
+
+
