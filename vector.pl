@@ -48,6 +48,20 @@ norm2(vector([H], _, 1), Norm) :- pow2(H, Norm).
   
 % vector_proj(V, W, Res) - succeeds if Res is the projection of V
 
+vector_proj(V, [W|T], Res) :-  
+  dot_product(V,W,VdotW), 
+  scalar_product(W, VdotW, W1dotV),
+  vector_proj(V, T, Nextres), 
+  vsum(W1dotV, Nextres, Res).
+vector_proj(vector(E, F, D), [], vector(Zeros, F, D) :- zerovector(D, Zeros).
+
+% Helper creates a vector of arbitrary length consisting of only zeroes.
+
+zerovector(0, vector([],F,D)).
+zerovector(D, vector([real(0)|Z], F, N)) :- E is D-1, zerovector(E, vector(Z, F, Nn)).
+
+
+
 % computes the dot product of two vectors.
 
 dot_product(vector([H1|T1], F, D), vector([H2|T2], F, D), Res) :- 
